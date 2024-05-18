@@ -1,0 +1,140 @@
+﻿<Window x:Class="SchoolProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolProject"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Реестр одаренных детей" Height="700" Width="1200" WindowStyle="None" MinWidth="700" MinHeight="500" WindowStartupLocation="CenterScreen" Icon="/School.png" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF7C22B1"/>
+            <GradientStop Color="#FF1C2A77" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Border x:Name="AddStudent" MinWidth="400" Margin="15,0,15,0" Background="white" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="15" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FF2F22CE" ShadowDepth="0" />
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Новый ученик" FontSize="22" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center" />
+                <TextBox x:Name="NameBox" materialDesign:HintAssist.Hint="Имя ученика" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox x:Name="ClassBox" materialDesign:HintAssist.Hint="Класс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox x:Name="AgeBox" materialDesign:HintAssist.Hint="Возраст" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <ComboBox x:Name="EventID" materialDesign:HintAssist.Hint="Название мероприятия" ItemsSource ="{Binding Events}" DisplayMemberPath="EventName" 
+                SelectedValue="{Binding EventName}" SelectedValuePath="EventName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Cursor="" />
+                <Grid Margin="0,20,0,0">
+                    <Button HorizontalAlignment="Left" Content="Создать"  Style="{StaticResource MaterialDesignFlatButton}" Click="Button_AddStudent_Click"/>
+                    <Button Content="Отмена" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Click="Button_AddSCancel_Click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="AddEvent" MinWidth="400" Margin="15,0,15,0" Background="white" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="15" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FF2F22CE" ShadowDepth="0" />
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Новое мероприятие" FontSize="22" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center" />
+                <TextBox x:Name="NameEvent" materialDesign:HintAssist.Hint="Название мероприятия" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <ComboBox x:Name="TypeEvent" materialDesign:HintAssist.Hint="Тип мероприятия" Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
+                    <ComboBoxItem Content="Интеллектуальный"/>
+                    <ComboBoxItem Content="Творческий"/>
+                    <ComboBoxItem Content="Спортивный"/>
+                </ComboBox>
+                <DatePicker x:Name="DateEvent" materialDesign:HintAssist.Hint="Дата мероприятия" Style="{StaticResource MaterialDesignDatePicker}" Margin="0 1" />
+                <Grid Margin="0,20,0,0">
+                    <Button HorizontalAlignment="Left" Content="Создать"  Style="{StaticResource MaterialDesignFlatButton}" Click="Button_AddEvent_Click"/>
+                    <Button Content="Отмена" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Click="Button_AddECancel_Click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="EditStudent" MinWidth="400" Margin="15,0,15,0" Background="white" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="15" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FF2F22CE" ShadowDepth="0" />
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Редактирование записи" FontSize="22" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center" />
+                <TextBox x:Name="EditNameBox" materialDesign:HintAssist.Hint="Имя ученика" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox x:Name="EditClassBox" materialDesign:HintAssist.Hint="Класс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox x:Name="EditAgeBox" materialDesign:HintAssist.Hint="Возраст" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <ComboBox x:Name="EditEventID" materialDesign:HintAssist.Hint="Название мероприятия" ItemsSource ="{Binding Events}" DisplayMemberPath="EventName" 
+                SelectedValue="{Binding EventName}" SelectedValuePath="EventName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Cursor="" />
+                <Grid Margin="0,20,0,0">
+                    <Button HorizontalAlignment="Left" Content="Изменить"  Style="{StaticResource MaterialDesignFlatButton}" Click="Button_EditStudent_Click"/>
+                    <Button Content="Отмена" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Click="Button_EditSCancel_Click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="EditEvent" MinWidth="400" Margin="15,0,15,0" Background="white" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="15" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FF2F22CE" ShadowDepth="0" />
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Редактирование записи" FontSize="22" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center" />
+                <TextBox x:Name="EditNameEvent" materialDesign:HintAssist.Hint="Название мероприятия" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <ComboBox x:Name="EditTypeEvent" materialDesign:HintAssist.Hint="Тип мероприятия" Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
+                    <ComboBoxItem Content="Интеллектуальный"/>
+                    <ComboBoxItem Content="Творческий"/>
+                    <ComboBoxItem Content="Спортивный"/>
+                </ComboBox>
+                <DatePicker x:Name="EditDateEvent" materialDesign:HintAssist.Hint="Дата мероприятия" Style="{StaticResource MaterialDesignDatePicker}" Margin="0 1" />
+                <Grid Margin="0,20,0,0">
+                    <Button HorizontalAlignment="Left" Content="Изменить"  Style="{StaticResource MaterialDesignFlatButton}" Click="Button_EditEvent_Click"/>
+                    <Button Content="Отмена" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Right" Click="Button_EditECancel_Click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Button x:Name="CreateBtn" Content="Создать" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Click="Button_AddS_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+        <Button x:Name="EditBtn" Content="Изменить" HorizontalAlignment="Left" Margin="120,50,0,0" VerticalAlignment="Top" Click="EditBtn_EditS_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+        <Button x:Name="DelBtn" Content="Удалить" HorizontalAlignment="Left" Margin="120,90,0,0" VerticalAlignment="Top" Click="Button_DelS_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+
+        <Button x:Name="CreateBtn2" Content="Создать" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Click="Button_AddE_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+        <Button x:Name="EditBtn2" Content="Изменить" HorizontalAlignment="Left" Margin="120,50,0,0" VerticalAlignment="Top" Click="EditBtn_EditE_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+        <Button x:Name="DelBtn2" Content="Удалить" HorizontalAlignment="Left" Margin="120,90,0,0" VerticalAlignment="Top" Click="Button_DelE_Click" Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Height="33" Width="100" Visibility="Hidden"/>
+
+        <Button Grid.Column="4" Content="X" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF5B0FAB" Click="Exit_Click" Padding="16,4,18,4"/>
+        <Button Grid.Column="4" Content="-" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF5B0FAB" Click="Minimum_Click" FontSize="20" VerticalContentAlignment="Top" />
+        <Button Grid.Column="1" Content="Ученики" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF5B0FAB" Click="ViewStd_Click" Height="50" Width="138" RenderTransformOrigin="0.366,0.626" />
+        <Button Grid.Column="2" Content="Мероприятия" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF5B0FAB" Click="Button_ViewEvent_Click" Height="50" Width="136" />
+        <Button Grid.Column="3" Content="Импорт в Excel" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF5B0FAB" Click="Btn_Import" Height="50" Width="136" Visibility="Visible" Cursor="Hand"/>
+        <DataGrid x:Name="StudentDate" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="120,0,140,0" GridLinesVisibility="All" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" Visibility="Hidden" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <materialDesign:DataGridTextColumn x:Name="idSS" Header="ID" Visibility="Hidden" Binding="{Binding idS}" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="nameS" Header="ФИО" Binding="{Binding Name}" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="clasS" Binding="{Binding Clas}" Header="Класс" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="ageS" Binding="{Binding Age}" Header="Возраст" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="eventID" Binding="{Binding EventID}" Header="Мероприятие" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="EventData" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="120,0,140,0" GridLinesVisibility="All" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" Visibility="Hidden" SelectionMode="Single" SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <materialDesign:DataGridTextColumn x:Name="idEE" Header="ID" Visibility="Hidden" Binding="{Binding idE}" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="nameE" Header="Название" Binding="{Binding EventName}" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="TypeE" Binding="{Binding EventType}" Header="Тип" IsReadOnly="True"/>
+                <materialDesign:DataGridTextColumn x:Name="DateE" Binding="{Binding EventDate}" Header="Дата" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
